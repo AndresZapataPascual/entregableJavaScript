@@ -2,8 +2,8 @@
 // Función sumArray: Suma de todos los elementos de un array
 // Parámetros: array (Array) - Un array de números
 // Devuelve: Number - La suma de todos los elementos del array
-const sumArray = () => {
-    
+const sumArray = (Arreglo) => {
+    return array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   };
   
   // Función filterEvenNumbers: Filtrar números pares de un array
