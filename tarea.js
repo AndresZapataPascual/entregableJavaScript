@@ -17,7 +17,24 @@ const sumArray = (array) => {
   // Parámetros: array (Array) - Un array de números
   // Devuelve: Number - El mayor número en el array
   const findMaxNumber = () => {
-    
+    // Comprobamos si el array está vacío
+    if (array.length === 0) {
+        return undefined; // Devolvemos undefined si el array está vacío
+    }
+
+    // Inicializamos la variable max con el primer elemento del array
+    let max = array[0];
+
+    // Iteramos sobre el resto de elementos del array
+    for (let i = 1; i < array.length; i++) {
+    // Si encontramos un elemento mayor que max, actualizamos max
+    if (array[i] > max) {
+      max = array[i];
+    }
+  }
+
+  // Devolvemos el mayor número encontrado
+  return max;
   };
   
   // Función toUpperCaseStrings: Convertir un array de strings a mayúsculas
@@ -98,7 +115,20 @@ const agregarHabilidad = (jugador, nuevaHabilidad) => {
 // Retorna:
 // - Un número que representa la duración total de todas las películas en minutos.
 const calcularDuracionTotal = (peliculas) => {
-    return peliculas.reduce((total, pelicula) => total + pelicula.duracion, 0);
+     // Filtrar las películas con duración válida (no negativa)
+     const peliculasValidas = peliculas.filter(pelicula => pelicula.duracion >= 0);
+
+     // Si no hay películas válidas, devolver 0
+     if (peliculasValidas.length === 0) {
+         return 0;
+     }
+ 
+     // Calcular la duración total de todas las películas válidas
+     const duracionTotal = peliculasValidas.reduce((acumulador, pelicula) => {
+         return acumulador + pelicula.duracion;
+     }, 0);
+ 
+     return duracionTotal;
 };
 
 
@@ -119,11 +149,21 @@ const buscarPeliculas = (peliculas, titulo, genero) => {
 // Retorna:
 // - Un número que representa el promedio de puntajes de todas las películas.
 const calcularPromedioPuntajes = (peliculas) => {
-    if (peliculas.length === 0) {
-        return 0;
-    }
-    const totalPuntajes = peliculas.reduce((total, pelicula) => total + pelicula.puntaje, 0);
-    return totalPuntajes / peliculas.length;
+   // Filtrar los puntajes negativos
+   const puntajesValidos = peliculas.filter(pelicula => pelicula.puntaje >= 0);
+
+   // Verificar si hay puntajes válidos para calcular el promedio
+   if (puntajesValidos.length === 0) {
+       return 0; // Si no hay puntajes válidos, devolver 0
+   }
+
+   // Calcular la suma de los puntajes válidos
+   const sumaPuntajes = puntajesValidos.reduce((acumulador, pelicula) => acumulador + pelicula.puntaje, 0);
+
+   // Calcular el promedio
+   const promedio = sumaPuntajes / puntajesValidos.length;
+
+   return promedio;
 };
 
 // Función para filtrar películas por año de lanzamiento.
@@ -133,8 +173,14 @@ const calcularPromedioPuntajes = (peliculas) => {
 // Retorna:
 // - Un array de objetos que representan películas lanzadas en el año especificado.
 const filtrarPorAño = (peliculas, año) => {
-    // Filtrar las películas por año de lanzamiento.
-    return peliculas.filter(pelicula => pelicula.año === año);
+    
+ // Convertir el año a un número si es una cadena
+    const añoNum = parseInt(año, 10);
+
+    // Filtrar las películas por año de lanzamiento
+    const peliculasFiltradas = peliculas.filter(pelicula => pelicula.año === añoNum);
+
+    return peliculasFiltradas;
 };
 
 // Función para calcular el promedio de duración de las películas por género.
@@ -305,7 +351,7 @@ class Autobus extends Vehiculo {
      * @returns {string} - La información del autobús en formato de cadena de texto.
      */
     obtenerInformacion() {
-        return `${super.obtenerInformacion()}, Color: ${this.color}, Cilindrada: ${this.cilindrada}, Potencia: ${this.potencia}, Capacidad de Pasajeros: ${this.capacidadPasajeros}, Tipo de Combustible: ${this.tipoCombustible}, Tipo de Motor: ${this.tipoMotor}`;
+        return `${super.obtenerInformacion()}, Color: ${this.color}, Cilindrada: ${this.cilindrada}, Potencia: ${this.potencia}, Pasajeros: ${this.capacidadPasajeros}, Combustible: ${this.tipoCombustible}, Tipo de Motor: ${this.tipoMotor}`;
     }
 }
 
@@ -338,7 +384,7 @@ class Bicicleta extends Vehiculo {
      * @returns {string} - La información de la bicicleta en formato de cadena de texto.
      */
     obtenerInformacion() {
-        return `${super.obtenerInformacion()}, Tipo: ${this.tipo}, Marchas: ${this.numMarchas}, Material: ${this.material}, Suspensión: ${this.suspencion}, Frenos: ${this.frenos}, Manubrio: ${this.tipoManubrio}`;
+        return `${super.obtenerInformacion()}, Tipo: ${this.tipo}, Marchas: ${this.numMarchas}, Material: ${this.material}, Suspensión: ${this.suspencion}, Frenos: ${this.frenos}, Tipo de Manubrio: ${this.tipoManubrio}`;
     }
 }
 
